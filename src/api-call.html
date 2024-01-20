@@ -53,14 +53,33 @@
 	});
 </script>
 
-<script type="text/x-red" data-template-name="sfmc_connection">
+<script type="text/html" data-template-name="sfmc_connection">
 	<div class="form-row">
-	    <label for="node-input-name"> <i class="fa fa-tag fa-fw"></i> Name</label>
-	    <input type="text" id="node-config-input-name" placeholder="Name">
+		<label for="node-config-input-name">Name</label>
+		<input type="text" id="node-config-input-name" placeholder="Name" />
+	</div>
+
+	<br />
+
+	<div class="form-row">
+		<label for="node-config-input-accountId">Account ID</label>
+		<input type="text" id="node-config-input-accountId" />
 	</div>
 
 	<div class="form-row">
-	  <label for="node-config-input-api_key">API Key</label>
-	  <input type="password" id="node-config-input-api_key" placeholder="API KEY">
+		<label for="node-config-input-subdomain">Subdomain</label>
+		<input type="text" id="node-config-input-subdomain" />
+	</div>
+
+	<br />
+
+	<div class="form-row">
+		<label for="node-config-input-clientId">Client ID</label>
+		<input type="text" id="node-config-input-clientId" />
+	</div>
+
+	<div class="form-row">
+		<label for="node-config-input-clientSecret">Client Secret</label>
+		<input type="password" id="node-config-input-clientSecret" />
 	</div>
 </script>
