@@ -1,0 +1,66 @@
+<script type="text/javascript">
+	RED.nodes.registerType('sfmc', {
+		category: 'salesforce',
+		color: '#ffffff',
+		defaults: {
+			name: { value: '' },
+			sfmc_connection: {
+				value: '',
+				type: 'sfmc_connection',
+				required: true,
+			},
+		},
+		inputs: 1,
+		outputs: 1,
+		align: 'left',
+		icon: 'icon.png',
+		label: function () {
+			return this.name || 'API Call';
+		},
+		oneditprepare: function () {},
+	});
+</script>
+
+<script type="text/html" data-template-name="sfmc">
+	<div class="form-row">
+		<label for="node-input-name"> <span>Name</span></label>
+		<input type="text" id="node-input-name" />
+	</div>
+	<div class="form-row">
+		<label for="node-input-sfmc_connection">
+			<span>Connection</span>
+		</label>
+		<input type="text" id="node-input-sfmc_connection" />
+	</div>
+</script>
+
+<script type="text/javascript">
+	RED.nodes.registerType('sfmc_connection', {
+		category: 'config',
+		defaults: {
+			name: { value: '' },
+			accountId: { value: '' },
+			clientId: { value: '' },
+			subdomain: { value: '' },
+			clientSecret: { value: '' },
+		},
+		connection: {
+			api_key: {},
+		},
+		label: function () {
+			return this.name || 'Connection';
+		},
+	});
+</script>
+
+<script type="text/x-red" data-template-name="sfmc_connection">
+	<div class="form-row">
+	    <label for="node-input-name"> <i class="fa fa-tag fa-fw"></i> Name</label>
+	    <input type="text" id="node-config-input-name" placeholder="Name">
+	</div>
+
+	<div class="form-row">
+	  <label for="node-config-input-api_key">API Key</label>
+	  <input type="password" id="node-config-input-api_key" placeholder="API KEY">
+	</div>
+</script>
