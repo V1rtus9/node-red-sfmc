@@ -1,6 +1,6 @@
 {
 	"name": "@v1rtus9/node-red-sfmc",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A node for REST communication with Salesforce Marketing Cloud",
 	"main": "index.js",
 	"scripts": {
