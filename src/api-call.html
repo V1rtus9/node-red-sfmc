@@ -4,6 +4,8 @@
 		color: '#ffffff',
 		defaults: {
 			name: { value: '' },
+			method: { value: 'GET' },
+			endpoint: { value: '/' },
 			sfmc_connection: {
 				value: '',
 				type: 'sfmc_connection',
@@ -15,9 +17,22 @@
 		align: 'left',
 		icon: 'icon.png',
 		label: function () {
-			return this.name || 'API Call';
+			return this.name || 'sfmc';
 		},
-		oneditprepare: function () {},
+		oneditprepare: function () {
+			$('#node-input-method').typedInput({
+				types: [
+					{
+						options: [
+							{ value: 'GET', label: 'GET' },
+							{ value: 'POST', label: 'POST' },
+							{ value: 'PUT', label: 'PUT' },
+							{ value: 'DELETE', label: 'DELETE' },
+						],
+					},
+				],
+			});
+		},
 	});
 </script>
 
@@ -26,11 +41,35 @@
 		<label for="node-input-name"> <span>Name</span></label>
 		<input type="text" id="node-input-name" />
 	</div>
+
 	<div class="form-row">
 		<label for="node-input-sfmc_connection">
 			<span>Connection</span>
 		</label>
 		<input type="text" id="node-input-sfmc_connection" />
+	</div>
+
+	<div style="width: 95%; height: 10px; border-bottom: 1px solid lightgray; ">
+		<span
+			style="font-size: 12px; background-color: white; padding: 5px; margin-left: 10px;"
+		>
+			Request Options
+		</span>
+	</div>
+
+	<br />
+
+	<div class="form-row">
+		<label for="node-input-method">
+			<span>Method</span>
+		</label>
+		<input type="text" id="node-input-method" />
+	</div>
+	<div class="form-row">
+		<label for="node-input-endpoint">
+			<span>Endpoint</span>
+		</label>
+		<input type="text" id="node-input-endpoint" />
 	</div>
 </script>
 
