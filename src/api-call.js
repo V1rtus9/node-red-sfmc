@@ -4,7 +4,7 @@ const { SfmcApi } = require('sfmc-api');
 module.exports = function (RED) {
 	function SfmcApiCall(config) {
 		RED.nodes.createNode(this, config);
-		const connection = RED.nodes.getNode(config.sfmcConnection);
+		const connection = RED.nodes.getNode(config.connection);
 
 		const apiClient = new SfmcApi({
 			subdomain: connection.subdomain,
@@ -41,6 +41,7 @@ module.exports = function (RED) {
 				})();
 
 				this.send({
+					...msg,
 					payload: response,
 				});
 			} catch (e) {
@@ -57,7 +58,7 @@ module.exports = function (RED) {
 	}
 
 	RED.nodes.registerType('sfmc', SfmcApiCall);
-	RED.nodes.registerType('sfmcConnection', SfmcConnection, {
+	RED.nodes.registerType('sfmc-connection', SfmcConnection, {
 		accountId: { type: 'text' },
 		subdomain: { type: 'text' },
 		credentials: {

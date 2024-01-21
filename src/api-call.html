@@ -7,9 +7,9 @@
 			method: { value: 'GET' },
 			endpoint: { value: '/', required: true },
 			payload: { value: 'ignore', required: true },
-			sfmcConnection: {
+			connection: {
 				value: '',
-				type: 'sfmcConnection',
+				type: 'sfmc-connection',
 				required: true,
 			},
 		},
@@ -59,10 +59,10 @@
 	</div>
 
 	<div class="form-row">
-		<label for="node-input-sfmcConnection">
+		<label for="node-input-connection">
 			<span>Connection</span>
 		</label>
-		<input type="text" id="node-input-sfmcConnection" />
+		<input type="text" id="node-input-connection" />
 	</div>
 
 	<div style="width: 95%; height: 10px; border-bottom: 1px solid lightgray; ">
@@ -107,7 +107,7 @@
 </script>
 
 <script type="text/javascript">
-	RED.nodes.registerType('sfmcConnection', {
+	RED.nodes.registerType('sfmc-connection', {
 		category: 'config',
 		defaults: {
 			name: { value: 'My SFMC Connection' },
@@ -124,7 +124,7 @@
 	});
 </script>
 
-<script type="text/html" data-template-name="sfmcConnection">
+<script type="text/html" data-template-name="sfmc-connection">
 	<div class="form-row">
 		<label for="node-config-input-name">Name</label>
 		<input type="text" id="node-config-input-name" placeholder="Name" />
