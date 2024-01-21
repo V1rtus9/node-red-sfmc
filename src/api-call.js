@@ -2,29 +2,37 @@ const mustache = require('mustache');
 const { SfmcApi } = require('sfmc-api');
 
 module.exports = function (RED) {
-	function sfmcApiCall(config) {
+	function SfmcApiCall(config) {
 		RED.nodes.createNode(this, config);
-		const connection = RED.nodes.getNode(config.sfmc_connection);
+		const connection = RED.nodes.getNode(config.sfmcConnection);
 
 		const apiClient = new SfmcApi({
-			clientId: connection.clientId,
 			subdomain: connection.subdomain,
 			accountId: connection.accountId,
-			clientSecret: connection.clientSecret,
+			clientId: connection.credentials.clientId,
+			clientSecret: connection.credentials.clientSecret,
 		});
 
 		this.on('input', async (msg) => {
 			const endpoint = mustache.render(config.endpoint, msg);
 
+			const body = config.payload === 'body' ? msg.payload : undefined;
+			const query =
+				config.payload === 'query'
+					? new URLSearchParams(msg.payload)
+					: undefined;
+
 			try {
 				const response = await (async () => {
 					switch (config.method) {
 						case 'GET':
-							return apiClient.rest.get(endpoint);
-						case 'POST':
-							return apiClient.rest.post(endpoint, msg.payload);
+							return apiClient.rest.get(
+								`${endpoint}?${query?.toString()}`,
+							);
 						case 'PUT':
-							return apiClient.rest.put(endpoint, msg.payload);
+							return apiClient.rest.put(endpoint, body);
+						case 'POST':
+							return apiClient.rest.post(endpoint, body);
 						case 'DELETE':
 							return apiClient.rest.delete(endpoint);
 						default:
@@ -41,20 +49,20 @@ module.exports = function (RED) {
 		});
 	}
 
-	function sfmcConnection(n) {
-		RED.nodes.createNode(this, n);
+	function SfmcConnection(config) {
+		RED.nodes.createNode(this, config);
 
-		this.clientId = n.clientId;
-		this.subdomain = n.subdomain;
-		this.accountId = n.accountId;
-		this.clientSecret = n.clientSecret;
+		this.subdomain = config.subdomain;
+		this.accountId = config.accountId;
 	}
 
-	RED.nodes.registerType('sfmc', sfmcApiCall);
-	RED.nodes.registerType('sfmc_connection', sfmcConnection, {
-		clientId: { type: 'text' },
-		subdomain: { type: 'text' },
+	RED.nodes.registerType('sfmc', SfmcApiCall);
+	RED.nodes.registerType('sfmcConnection', SfmcConnection, {
 		accountId: { type: 'text' },
-		clientSecret: { type: 'text' },
+		subdomain: { type: 'text' },
+		credentials: {
+			clientId: { type: 'text' },
+			clientSecret: { type: 'password' },
+		},
 	});
 };

@@ -5,10 +5,11 @@
 		defaults: {
 			name: { value: '' },
 			method: { value: 'GET' },
-			endpoint: { value: '/' },
-			sfmc_connection: {
+			endpoint: { value: '/', required: true },
+			payload: { value: 'ignore', required: true },
+			sfmcConnection: {
 				value: '',
-				type: 'sfmc_connection',
+				type: 'sfmcConnection',
 				required: true,
 			},
 		},
@@ -32,6 +33,21 @@
 					},
 				],
 			});
+
+			$('#node-input-payload').typedInput({
+				types: [
+					{
+						options: [
+							{ value: 'ignore', label: 'Ignore' },
+							{ value: 'body', label: 'Send as request body' },
+							{
+								value: 'query',
+								label: 'Append as query parameters',
+							},
+						],
+					},
+				],
+			});
 		},
 	});
 </script>
@@ -43,10 +59,10 @@
 	</div>
 
 	<div class="form-row">
-		<label for="node-input-sfmc_connection">
+		<label for="node-input-sfmcConnection">
 			<span>Connection</span>
 		</label>
-		<input type="text" id="node-input-sfmc_connection" />
+		<input type="text" id="node-input-sfmcConnection" />
 	</div>
 
 	<div style="width: 95%; height: 10px; border-bottom: 1px solid lightgray; ">
@@ -71,20 +87,36 @@
 		</label>
 		<input type="text" id="node-input-endpoint" />
 	</div>
+
+	<div style="width: 95%; height: 10px; border-bottom: 1px solid lightgray; ">
+		<span
+			style="font-size: 12px; background-color: white; padding: 5px; margin-left: 10px;"
+		>
+			Advanced Options
+		</span>
+	</div>
+
+	<br />
+
+	<div class="form-row">
+		<label for="node-input-payload">
+			<span>Payload</span>
+		</label>
+		<input type="text" id="node-input-payload" />
+	</div>
 </script>
 
 <script type="text/javascript">
-	RED.nodes.registerType('sfmc_connection', {
+	RED.nodes.registerType('sfmcConnection', {
 		category: 'config',
 		defaults: {
-			name: { value: '' },
+			name: { value: 'My SFMC Connection' },
 			accountId: { value: '' },
-			clientId: { value: '' },
 			subdomain: { value: '' },
-			clientSecret: { value: '' },
 		},
-		connection: {
-			api_key: {},
+		credentials: {
+			clientId: { type: 'text' },
+			clientSecret: { type: 'password' },
 		},
 		label: function () {
 			return this.name || 'Connection';
@@ -92,7 +124,7 @@
 	});
 </script>
 
-<script type="text/html" data-template-name="sfmc_connection">
+<script type="text/html" data-template-name="sfmcConnection">
 	<div class="form-row">
 		<label for="node-config-input-name">Name</label>
 		<input type="text" id="node-config-input-name" placeholder="Name" />
