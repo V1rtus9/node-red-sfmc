@@ -1,14 +1,16 @@
 {
-	"name": "red-sfmc",
+	"name": "@v1rtus9/node-red-sfmc",
 	"version": "1.0.0",
-	"description": "",
+	"description": "A node for REST communication with Salesforce Marketing Cloud",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
+	"keywords": [
+		"node-red"
+	],
+	"author": "V1rtus9",
+	"license": "MIT",
 	"dependencies": {
 		"mustache": "^4.2.0",
 		"sfmc-api": "^1.2.9"
